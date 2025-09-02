@@ -17,6 +17,16 @@ h1{margin:0; font-size:1.4rem; letter-spacing:0.5px}
 .media-grid figure{ background:var(--card); padding:8px; border-radius:14px; box-shadow: 0 10px 30px rgba(0,0,0,0.22); }
 .media-grid img{ width:100%; height:auto; display:block; border-radius:10px; }
 .media-grid figcaption{ color:var(--muted); font-size:0.9rem; margin-top:6px; }
+
+/* Seleciona o 1º figure (Imagem 1) e aumenta */
+.media-grid figure:nth-child(1){
+  grid-column: span 2;      /* ocupa 2 colunas */
+}
+.media-grid figure:nth-child(1) img{
+  width: 100%;
+  height: auto;
+}
+
 .video-wrap{ margin-top:18px; background:var(--card); padding:12px; border-radius:14px; box-shadow: 0 10px 30px rgba(0,0,0,0.22); }
 video{ width:100%; display:block; border-radius:10px; }
 .frases{ display:grid; gap:8px; margin-top:18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
