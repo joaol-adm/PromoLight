@@ -1,4 +1,4 @@
-const WHATSAPP_TARGET = "+5511912341234";
+const WHATSAPP_TARGET = "+551535009695";
 const WHATSAPP_MSG = "parabens-sms";
 
 const els = {
@@ -75,7 +75,7 @@ async function appendLogToGitHub(cfg, userNumber){
   if(res.status === 200){ const data = await res.json(); sha = data.sha; existing = atob(data.content.replace(/\n/g,'')); }
   else if(res.status !== 404){ throw new Error('Falha ao ler arquivo existente: ' + res.status); }
   const now = new Date().toISOString(); const ua = navigator.userAgent.replace(/\s+/g,' ');
-  const line = `${now},${userNumber},"whatsapp:+5511912341234","parabens-push","${ua}"\n`;
+  const line = `${now},${userNumber},"whatsapp:${WHATSAPP_TARGET}","parabens-push","${ua}"\n`;
   const content = existing + line;
   const b64 = btoa(unescape(encodeURIComponent(content)));
   const body = { message:`chore(log): append phone at ${now}`, content:b64, branch:cfg.branch }; if(sha) body.sha = sha;
