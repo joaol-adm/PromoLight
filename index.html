@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Promo Light V2</title>
+  <title>Promo Light v3</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -13,39 +13,25 @@
 </head>
 <body>
   <header class="header">
-
-<!--
-    <h1>Promo Light <small class="tag">V2</small></h1>
+    <h1>Promo Light <small class="tag">v3</small></h1>
     <button id="btnSettings" class="btn secondary">Configurações GitHub</button>
--->
-
-<div style="display: flex; align-items: center; gap: 10px;">
-  <img src="https://joaol-adm.github.io/PromoLight/OpTiXis_logo.png" alt="Logo do Sistema" style="height: 80px;">
-  <h2 style="margin: 0;"> OptiPromo | <small class="tag">Promoções Inteligentes</small></h2>
-</div>
-
-<!--
-   <h5>Powered by OpTiXis  |  All Rights Reserved  </h5>
--->
-
   </header>
-  <main class="container">
-    <section class="media-grid">
-      <figure><img src="assets/images/img1.jpg" alt="" /><figcaption></figcaption>Imagem 1</figure>
-      <figure><img src="assets/images/img2.png" alt="" /><figcaption></figcaption>Imagem 2</figure>
-      <figure><img src="assets/images/img3.svg" alt="Imagem 3" /><figcaption></figcaption></figure>
-    </section>
-    <section class="video-wrap">
-      <video id="promoVideo" controls playsinline preload="metadata" poster="assets/images/img1.svg">
-        <source src="assets/video/sample.mp4" type="video/mp4">
-       
-<!--
- <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
--->
 
+  <main class="container">
+    <section class="media-grid-v3">
+      <figure class="img1"><img id="img1" src="assets/images/img1.svg" alt="Imagem 1" /></figure>
+      <figure class="img2"><img id="img2" src="assets/images/img2.svg" alt="Imagem 2" /></figure>
+      <figure class="img3"><img id="img3" src="assets/images/img3.svg" alt="Imagem 3" /></figure>
+    </section>
+
+    <section class="video-wrap">
+      <video id="promoVideo" controls playsinline preload="metadata" poster="assets/images/img3.svg">
+        <source src="assets/video/sample.mp4" type="video/mp4">
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
         Seu navegador não suporta vídeos .mp4.
       </video>
     </section>
+
     <section class="frases">
       <div class="frase cooper f1">frase 1 VERMELHO</div>
       <div class="frase cooper f2">frase 2 MARRON</div>
@@ -54,6 +40,7 @@
       <div class="frase cooper f5">frase 5 AMARELO</div>
       <div class="frase cooper f6">Frase 6 LARANJA</div>
     </section>
+
     <section class="actions">
       <label class="phone-label">
         Telefone do usuário (com DDI + DDD) para registro no log:
@@ -61,16 +48,14 @@
       </label>
       <button id="btnSalvar" class="btn primary">salvar</button>
     </section>
-   
-<!--
- <p class="note">
-      Esta versão abre o <b>WhatsApp</b> ao clicar em <b>salvar</b>, pré-preenchendo a mensagem original
-      e direcionando para <code>+55 11 91234-1234</code> para confirmação de envio.
-      Mantém a <b>notificação local</b> via Service Worker e o <b>registro opcional no GitHub</b>.
--->
-   
- </p>
+
+    <p class="note">
+      Este app abre o <b>WhatsApp</b> para confirmar o envio da mensagem <code>parabens-sms</code> para
+      <code id="whatsTarget"></code>. Mantém a <b>notificação local</b> via Service Worker e o <b>registro opcional no GitHub</b>.
+      Aceita imagens <code>.svg</code>, <code>.png</code> e <code>.jpg</code> automaticamente.
+    </p>
   </main>
+
   <dialog id="settingsModal">
     <form method="dialog" class="settings">
       <h2>Configurações de Log no GitHub</h2>
@@ -84,9 +69,15 @@
       <p class="hint">Seu token fica salvo apenas no seu navegador (localStorage).</p>
     </form>
   </dialog>
+
   <footer class="footer"><small>© Promo Light</small></footer>
+
   <script>
-    if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js'); }); }
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js');
+      });
+    }
   </script>
 </body>
 </html>

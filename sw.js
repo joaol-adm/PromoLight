@@ -1,5 +1,7 @@
+const CACHE = 'promolight-v3';
+
 self.addEventListener('install', (e)=>{
-  e.waitUntil(caches.open('promolight-v2').then(cache => cache.addAll([
+  e.waitUntil(caches.open(CACHE).then(cache => cache.addAll([
     'index.html','styles.css','app.js','manifest.json',
     'icon-192.png','icon-512.png',
     'assets/images/img1.svg','assets/images/img2.svg','assets/images/img3.svg'
@@ -7,7 +9,18 @@ self.addEventListener('install', (e)=>{
   self.skipWaiting();
 });
 self.addEventListener('activate', (e) => { e.waitUntil(self.clients.claim()); });
-self.addEventListener('fetch', (e)=>{ e.respondWith(caches.match(e.request).then((resp)=> resp || fetch(e.request))); });
+self.addEventListener('fetch', (e)=>{
+  e.respondWith(
+    caches.match(e.request).then((cached) => {
+      if (cached) return cached;
+      return fetch(e.request).then((resp) => {
+        const clone = resp.clone();
+        caches.open(CACHE).then(cache => cache.put(e.request, clone));
+        return resp;
+      });
+    }).catch(() => caches.match('index.html'))
+  );
+});
 self.addEventListener('message', (event) => {
   const data = event.data || {};
   if(data.type === 'show-notification'){

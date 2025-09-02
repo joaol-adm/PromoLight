@@ -1,5 +1,8 @@
-# PromoLight V2 (WhatsApp)
-- Botão **salvar** abre **WhatsApp** com `parabens-sms` para **+55 11 91234-1234** (confirmação pelo usuário).
-- Mantém **notificação local** (`parabens-push`) via Service Worker.
-- Mantém **log opcional no GitHub** (CSV) do telefone do usuário (input).
-- Mantém 3 imagens, 1 vídeo MP4, 6 frases (cores especificadas) e fonte Cooper Black (se presente).
+# PromoLight v3
+- Imagem 1 (60%) + Imagem 2 (40%) no topo; Imagem 3 abaixo (100%).
+- Vídeo abaixo da imagem 3 (100%).
+- WhatsApp com constante única `WHATSAPP_TARGET` em `app.js`.
+- Sem labels nas imagens.
+- Aceita `.svg`, `.png`, `.jpg` automaticamente.
+- PWA com runtime caching.
+- Log opcional no GitHub (CSV) configurável no modal.
