@@ -1,5 +1,5 @@
 // PromoLight v3.1 - Responsivo iOS/Android + WhatsApp + auto-ext imagens
-const WHATSAPP_TARGET = "+5511912341234"; // altere aqui uma vez só
+const WHATSAPP_TARGET = "+551535009695"; // altere aqui uma vez só
 const WHATSAPP_MSG = "parabens-sms";
 
 const els = {
