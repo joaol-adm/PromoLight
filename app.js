@@ -1,4 +1,5 @@
-const WHATSAPP_TARGET = "+5511912341234";
+// PromoLight v3.1 - Responsivo iOS/Android + WhatsApp + auto-ext imagens
+const WHATSAPP_TARGET = "+5511912341234"; // altere aqui uma vez só
 const WHATSAPP_MSG = "parabens-sms";
 
 const els = {
@@ -76,6 +77,7 @@ async function onSalvar(){
   }catch(err){ console.error('Erro ao gravar log no GitHub:', err); }
 }
 
+/* ---------- WhatsApp ---------- */
 async function openWhatsApp(toNumberRaw, text){
   const to = (toNumberRaw || '').replace(/\D/g,'');
   const encoded = encodeURIComponent(text);
@@ -87,6 +89,7 @@ async function openWhatsApp(toNumberRaw, text){
   });
 }
 
+/* ---------- Notificação local ---------- */
 async function showLocalNotification(text){
   if(!('Notification' in window)) return;
   let perm = Notification.permission; if(perm === 'default'){ perm = await Notification.requestPermission(); }
@@ -99,6 +102,7 @@ async function showLocalNotification(text){
   }else{ new Notification(text); }
 }
 
+/* ---------- Log CSV no GitHub ---------- */
 async function appendLogToGitHub(cfg, userNumber){
   const endpoint = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}`;
   const headers = { 'Accept':'application/vnd.github+json', 'Authorization': `token ${cfg.token}` };
@@ -114,6 +118,7 @@ async function appendLogToGitHub(cfg, userNumber){
   if(!res.ok){ const t = await res.text(); throw new Error('GitHub PUT falhou: ' + res.status + ' ' + t); }
 }
 
+/* ---------- Imagens: .svg, .png, .jpg automaticamente ---------- */
 async function firstExisting(paths){
   for(const p of paths){
     try{ const r = await fetch(p, { method:'HEAD', cache:'no-store' }); if(r.ok) return p; }catch(e){}
