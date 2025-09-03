@@ -1,5 +1,5 @@
-// PromoLight v3.1 - Responsivo iOS/Android + WhatsApp + auto-ext imagens
-const WHATSAPP_TARGET = "+551535009695"; // altere aqui uma vez só
+// PromoLight v3.2 - Imagens menores + Autoplay do vídeo quando 100% visível
+const WHATSAPP_TARGET = "+5511912341234"; // altere aqui uma vez só
 const WHATSAPP_MSG = "parabens-sms";
 
 const els = {
@@ -53,6 +53,8 @@ async function init(){
   els.btnSaveCfg.addEventListener('click', (ev) => { ev.preventDefault(); saveCfg(); els.modal.close(); });
 
   await resolveImagesAnyExt();
+
+  setupVideoAutoplayOnFullView();
 }
 
 async function onSalvar(){
@@ -136,6 +138,28 @@ async function resolveImagesAnyExt(){
     const src = await firstExisting([`${base}.svg`, `${base}.png`, `${base}.jpg`, `${base}.jpeg`]);
     if(src) el.src = src;
   }
+}
+
+/* ---------- Autoplay do vídeo quando 100% visível ---------- */
+function setupVideoAutoplayOnFullView(){
+  const video = document.getElementById('promoVideo');
+  if(!video) return;
+  video.muted = true;
+  const observer = new IntersectionObserver((entries) => {
+    for(const entry of entries){
+      if(entry.target !== video) continue;
+      if(entry.isIntersecting && entry.intersectionRatio >= 0.99){
+        const p = video.play();
+        if(p && typeof p.then === 'function'){
+          p.catch(()=>{/* ignore */});
+        }
+      }else{
+        video.pause();
+      }
+    }
+  }, { threshold: [0.25, 0.5, 0.75, 0.95, 1.0] });
+  observer.observe(video);
+  document.addEventListener('visibilitychange', ()=>{ if(document.hidden) video.pause(); });
 }
 
 document.addEventListener('DOMContentLoaded', init);

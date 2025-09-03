@@ -6,6 +6,8 @@
 
 :root{
   --bg:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#9ca3af; --accent:#2563eb;
+  --h-row: clamp(110px, 26vh, 240px);
+  --h-full: clamp(130px, 32vh, 300px);
 }
 
 *{box-sizing:border-box}
@@ -24,62 +26,54 @@ body{
 h1{margin:0; font-size:clamp(1.1rem, 3.5vw, 1.5rem); letter-spacing:0.5px}
 .tag{ background:#1f2937; color:#e5e7eb; padding:2px 8px; border-radius:999px; font-size:0.8rem; margin-left:6px; }
 
-.container{ max-width:1100px; margin:24px auto; padding:0 12px; }
+.container{ max-width:980px; margin:20px auto; padding:0 10px; }
 
-/* v3.1 layout: mantém 60/40 sempre, imagem 3 100% abaixo */
-.media-grid-v31{
+.media-grid-v32{
   display:grid;
   grid-template-columns: 3fr 2fr; /* 60% / 40% */
   grid-template-areas:
     "img1 img2"
     "img3 img3";
-  gap:12px;
-  align-items: start;
+  gap:10px;
+  align-items:start;
 }
-.media-grid-v31 .img1{ grid-area: img1; }
-.media-grid-v31 .img2{ grid-area: img2; }
-.media-grid-v31 .img3{ grid-area: img3; }
+.media-grid-v32 .img1{ grid-area: img1; }
+.media-grid-v32 .img2{ grid-area: img2; }
+.media-grid-v32 .img3{ grid-area: img3; }
 
-.media-grid-v31 figure{
-  background:var(--card); padding:6px; border-radius:12px;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.20);
+.media-grid-v32 figure{ background:var(--card); padding:6px; border-radius:12px; box-shadow: 0 8px 22px rgba(0,0,0,0.18); overflow: hidden; }
+.media-grid-v32 img{
+  width:100%; height:auto; display:block; border-radius:8px;
+  aspect-ratio: 16 / 9; object-fit: cover;
 }
-.media-grid-v31 img{ width:100%; height:auto; display:block; border-radius:8px; }
+.media-grid-v32 .img1 img, .media-grid-v32 .img2 img{ max-height: var(--h-row); }
+.media-grid-v32 .img3 img{ max-height: var(--h-full); }
 
-/* Vídeo responsivo full width */
-.video-wrap{ margin-top:12px; background:var(--card); padding:8px; border-radius:12px; box-shadow: 0 10px 24px rgba(0,0,0,0.20); }
+.video-wrap{ margin-top:10px; background:var(--card); padding:8px; border-radius:12px; box-shadow:0 8px 22px rgba(0,0,0,0.18); }
 video{ width:100%; height:auto; display:block; border-radius:8px; }
 
-/* Frases: uma linha por frase, empilhadas verticalmente */
-.frases{ display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+.frases{ display:flex; flex-direction:column; gap:8px; margin-top:12px; }
 .frase{
   padding:10px 12px; border-radius:10px; background:var(--card);
-  text-align:center; line-height:1;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  font-size: clamp(1rem, 4.2vw, 1.6rem);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  text-align:center; line-height:1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-size: clamp(1rem, 4vw, 1.4rem);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.16);
 }
 .cooper{ font-family: "Cooper Black", serif; font-weight: normal; }
 
-.f1{ color:#FF0000; }
-.f2{ color:#843C0C; }
-.f3{ color:#542708; }
+.f1{ color:#FF0000; } .f2{ color:#843C0C; } .f3{ color:#542708; }
 .f4{ color:#FFF2CC; text-shadow:0 0 4px rgba(0,0,0,0.6); }
 .f5{ color:#FFFF00; text-shadow:0 0 4px rgba(0,0,0,0.6); }
 .f6{ color:#ED7D31; }
 
-.actions{ display:flex; gap:10px; align-items:center; margin-top:14px; flex-wrap:wrap; }
+.actions{ display:flex; gap:10px; align-items:center; margin-top:12px; flex-wrap:wrap; }
 .phone-label{ display:flex; gap:8px; align-items:center; }
-.phone-label input{
-  padding:10px 12px; border-radius:10px; border:1px solid #1f2937;
-  background:#0b1220; color:var(--text); min-width:240px; width:100%;
-}
+.phone-label input{ padding:10px 12px; border-radius:10px; border:1px solid #1f2937; background:#0b1220; color:var(--text); min-width:240px; width:100%; }
 
-.btn{
-  appearance:none; border:none; cursor:pointer; padding:10px 14px; border-radius:12px;
-  font-weight:600; box-shadow:0 6px 18px rgba(0,0,0,0.2);
-}
-.btn.primary{ background:var(--accent); color:white; }
-.btn.secondary{ background:#374151; color:white; }
-
+.btn{ appearance:none; border:none; cursor:pointer; padding:10px 14px; border-radius:12px; font-weight:600; box-shadow:0 6px 18px rgba(0,0,0,0.2); }
+.btn.primary{ background:var(--accent); color:white; } .btn.secondary{ background:#374151; color:white; }
 .note{ color:var(--muted); margin-top:10px; font-size:0.9rem; }
+
+@media (max-width: 360px){
+  :root{ --h-row: clamp(96px, 24vh, 200px); --h-full: clamp(110px, 28vh, 260px); }
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Promo Light v3.1</title>
+  <title>Promo Light v3.2</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -13,19 +13,19 @@
 </head>
 <body>
   <header class="header">
-    <h1>Promo Light <small class="tag">v3.1</small></h1>
+    <h1>Promo Light <small class="tag">v3.2</small></h1>
     <button id="btnSettings" class="btn secondary">Configurações GitHub</button>
   </header>
 
   <main class="container">
-    <section class="media-grid-v31">
+    <section class="media-grid-v32">
       <figure class="img1"><img id="img1" src="assets/images/img1.svg" alt="Imagem 1" /></figure>
       <figure class="img2"><img id="img2" src="assets/images/img2.svg" alt="Imagem 2" /></figure>
       <figure class="img3"><img id="img3" src="assets/images/img3.svg" alt="Imagem 3" /></figure>
     </section>
 
     <section class="video-wrap">
-      <video id="promoVideo" controls playsinline preload="metadata" poster="assets/images/img3.svg">
+      <video id="promoVideo" playsinline muted preload="metadata" poster="assets/images/img3.svg" controls>
         <source src="assets/video/sample.mp4" type="video/mp4">
         <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
         Seu navegador não suporta vídeos .mp4.
@@ -50,9 +50,8 @@
     </section>
 
     <p class="note">
-      Este app abre o <b>WhatsApp</b> para confirmar o envio da mensagem <code>parabens-sms</code> para
-      <code id="whatsTarget"></code>. Mantém a <b>notificação local</b> via Service Worker e o <b>registro opcional no GitHub</b>.
-      Aceita imagens <code>.svg</code>, <code>.png</code> e <code>.jpg</code> automaticamente.
+      WhatsApp: <code id="whatsTarget"></code> • Imagens auto-ext (<code>.svg/.png/.jpg</code>) •
+      Autoplay do vídeo quando 100% visível (iOS/Android) • PWA + log opcional no GitHub.
     </p>
   </main>
 
