@@ -1,5 +1,5 @@
 // PromoLight v3.4 - Imagens com o mesmo tamanho do vídeo + pilha vertical
-const WHATSAPP_TARGET = "+5511912341234"; // altere aqui uma vez só
+const WHATSAPP_TARGET = "+551535009695"; // altere aqui uma vez só
 const WHATSAPP_MSG = "parabens-sms";
 
 const els = {
