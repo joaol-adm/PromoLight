@@ -1,5 +1,8 @@
-# PromoLight v3.4 (rebuild)
-- Imagens 1, 2 e 3 com o mesmo tamanho do vídeo (empilhadas).
-- Vídeo 100% da largura; autoplay quando ~100% visível.
-- `WHATSAPP_TARGET` único; frases 1/linha; imagens auto-ext (.svg/.png/.jpg).
-- PWA cache `promolight-v3-4`; log opcional no GitHub.
+# PromoLight v4.1
+
+Cache-busting aplicado:
+- `index.html`: refs com `?v=4-1` em manifest, css, js, imagens e vídeo.
+- SW: `CACHE = 'promolight-v4-1'` + pré-cache com URLs versionadas e `index.html` puro.
+- Manifest: ícones renomeados para `icon-192-v4-1.png` e `icon-512-v4-1.png`.
+
+Funcionalidades mantidas: botão **ENVIAR** (WhatsApp), notificação local, config GitHub e telefone **ocultos**.

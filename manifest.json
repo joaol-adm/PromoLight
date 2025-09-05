@@ -1,5 +1,5 @@
 {
-  "name": "Promo Light v3.4",
+  "name": "Promo Light v4.1",
   "short_name": "PromoLight",
   "start_url": "./index.html",
   "display": "standalone",
@@ -7,12 +7,12 @@
   "theme_color": "#111827",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "icon-192-v4-1.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "icon-512-v4-1.png",
       "sizes": "512x512",
       "type": "image/png"
     }

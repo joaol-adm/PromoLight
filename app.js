@@ -1,82 +1,32 @@
-// PromoLight v3.4 - Imagens com o mesmo tamanho do vídeo + pilha vertical
-const WHATSAPP_TARGET = "+551535009695"; // altere aqui uma vez só
-const WHATSAPP_MSG = "Salva minha PROMOCAO";
+// PromoLight v4.1 - Cache-busting aplicado; log/telefone ocultos; WhatsApp + notificação
+const WHATSAPP_TARGET = "+5511912341234"; // altere aqui uma vez só
+const WHATSAPP_MSG = "parabens-sms";
+const ASSET_VER = "v=4-1";
 
-const els = {
-  phone: null, btnSalvar: null, btnSettings: null, modal: null,
-  cfgOwner: null, cfgRepo: null, cfgBranch: null, cfgPath: null, cfgToken: null, btnSaveCfg: null,
-};
+const els = { btnEnviar: null, btnSettings: null, modal: null };
 
 function $(sel){ return document.querySelector(sel); }
 
-function loadCfg(){
-  const cfg = JSON.parse(localStorage.getItem('promolight_cfg') || '{}');
-  els.cfgOwner.value = cfg.owner || 'joaol-adm';
-  els.cfgRepo.value = cfg.repo || 'PromoLight';
-  els.cfgBranch.value = cfg.branch || 'main';
-  els.cfgPath.value = cfg.path || 'logs/promo-log.csv';
-  els.cfgToken.value = cfg.token || '';
-}
-
-function saveCfg(){
-  const cfg = {
-    owner: els.cfgOwner.value.trim(),
-    repo: els.cfgRepo.value.trim(),
-    branch: els.cfgBranch.value.trim(),
-    path: els.cfgPath.value.trim(),
-    token: els.cfgToken.value.trim(),
-  };
-  localStorage.setItem('promolight_cfg', JSON.stringify(cfg));
-  return cfg;
-}
-
 async function init(){
-  els.phone = $('#inputPhone');
-  els.btnSalvar = $('#btnSalvar');
+  els.btnEnviar = $('#btnEnviar');
   els.btnSettings = $('#btnSettings');
   els.modal = $('#settingsModal');
 
-  els.cfgOwner = $('#cfgOwner');
-  els.cfgRepo = $('#cfgRepo');
-  els.cfgBranch = $('#cfgBranch');
-  els.cfgPath = $('#cfgPath');
-  els.cfgToken = $('#cfgToken');
-  els.btnSaveCfg = $('#btnSaveCfg');
-
   const wt = $('#whatsTarget'); if(wt) wt.textContent = WHATSAPP_TARGET;
 
-  const savedPhone = localStorage.getItem('promolight_phone');
-  if(savedPhone){ els.phone.value = savedPhone; }
-
-  els.btnSalvar.addEventListener('click', onSalvar);
-  els.btnSettings.addEventListener('click', () => { loadCfg(); els.modal.showModal(); });
-  els.btnSaveCfg.addEventListener('click', (ev) => { ev.preventDefault(); saveCfg(); els.modal.close(); });
+  if(els.btnEnviar){ els.btnEnviar.addEventListener('click', onEnviar); }
+  if(els.btnSettings && !els.btnSettings.hasAttribute('hidden')){
+    els.btnSettings.addEventListener('click', () => { if(els.modal) els.modal.showModal(); });
+  }
 
   await resolveImagesAnyExt();
-
   setupVideoAutoplayOnFullView();
 }
 
-async function onSalvar(){
-  const userNumber = (els.phone.value || '').replace(/\s+/g, '');
-  if(!userNumber){
-    alert('Informe o seu telefone com DDI + DDD para registro no log.');
-    els.phone.focus();
-    return;
-  }
-  localStorage.setItem('promolight_phone', userNumber);
-
+async function onEnviar(){
   try{ await openWhatsApp(WHATSAPP_TARGET, WHATSAPP_MSG); }
   catch(err){ console.error('Falha ao abrir WhatsApp:', err); alert('Não foi possível abrir o WhatsApp automaticamente.'); }
-
   try{ await showLocalNotification('parabens-push'); }catch(err){}
-
-  try{
-    const cfg = JSON.parse(localStorage.getItem('promolight_cfg') || '{}');
-    if(cfg.owner && cfg.repo && cfg.branch && cfg.path && cfg.token){
-      await appendLogToGitHub(cfg, userNumber);
-    }
-  }catch(err){ console.error('Erro ao gravar log no GitHub:', err); }
 }
 
 /* ---------- WhatsApp ---------- */
@@ -100,30 +50,16 @@ async function showLocalNotification(text){
     navigator.serviceWorker.controller.postMessage({type:'show-notification', title:text, body:'PromoLight'});
   }else if('serviceWorker' in navigator){
     const reg = await navigator.serviceWorker.ready;
-    reg.showNotification(text, { body:'PromoLight', icon:'icon-192.png', badge:'icon-192.png', vibrate:[100,50,100] });
+    reg.showNotification(text, { body:'PromoLight', icon:`icon-192-v4-1.png`, badge:`icon-192-v4-1.png`, vibrate:[100,50,100] });
   }else{ new Notification(text); }
 }
 
-/* ---------- Log CSV no GitHub ---------- */
-async function appendLogToGitHub(cfg, userNumber){
-  const endpoint = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}`;
-  const headers = { 'Accept':'application/vnd.github+json', 'Authorization': `token ${cfg.token}` };
-  let sha = null, existing = ''; const getUrl = endpoint + `?ref=${encodeURIComponent(cfg.branch)}`;
-  let res = await fetch(getUrl, { headers });
-  if(res.status === 200){ const data = await res.json(); sha = data.sha; existing = atob(data.content.replace(/\n/g,'')); }
-  else if(res.status !== 404){ throw new Error('Falha ao ler arquivo existente: ' + res.status); }
-  const now = new Date().toISOString(); const ua = navigator.userAgent.replace(/\s+/g,' ');
-  const line = `${now},${userNumber},"whatsapp:${WHATSAPP_TARGET}","parabens-push","${ua}"\n`;
-  const content = existing + line; const b64 = btoa(unescape(encodeURIComponent(content)));
-  const body = { message:`chore(log): append phone at ${now}`, content:b64, branch:cfg.branch }; if(sha) body.sha = sha;
-  res = await fetch(endpoint, { method:'PUT', headers, body: JSON.stringify(body) });
-  if(!res.ok){ const t = await res.text(); throw new Error('GitHub PUT falhou: ' + res.status + ' ' + t); }
-}
-
-/* ---------- Imagens: .svg, .png, .jpg automaticamente ---------- */
+/* ---------- Imagens: .svg, .png, .jpg automaticamente (com versionamento) ---------- */
+function withVer(url){ return url.includes('?') ? url + '&' + ASSET_VER : url + '?' + ASSET_VER; }
 async function firstExisting(paths){
   for(const p of paths){
-    try{ const r = await fetch(p, { method:'HEAD', cache:'no-store' }); if(r.ok) return p; }catch(e){}
+    const url = withVer(p);
+    try{ const r = await fetch(url, { method:'HEAD', cache:'no-store' }); if(r.ok) return url; }catch(e){}
   }
   return null;
 }
@@ -144,16 +80,14 @@ async function resolveImagesAnyExt(){
 function setupVideoAutoplayOnFullView(){
   const video = document.getElementById('promoVideo');
   if(!video) return;
-  video.muted = true; // necessário para autoplay em mobile
+  video.muted = true;
   const observer = new IntersectionObserver((entries) => {
     for(const entry of entries){
       if(entry.target !== video) continue;
       if(entry.isIntersecting && entry.intersectionRatio >= 0.98){
         const p = video.play();
         if(p && typeof p.then === 'function'){ p.catch(()=>{}); }
-      }else{
-        video.pause();
-      }
+      }else{ video.pause(); }
     }
   }, { threshold: [0.25, 0.5, 0.75, 0.98, 1.0] });
   observer.observe(video);

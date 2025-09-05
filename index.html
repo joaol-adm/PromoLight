@@ -3,72 +3,73 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
-  <title>Promo Light v3.4</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon-192.png" sizes="192x192">
-  <link rel="apple-touch-icon" href="icon-192.png">
+  <title>Promo Light v4.1</title>
+  <link rel="manifest" href="manifest.json?v=4-1">
+  <link rel="icon" href="icon-192-v4-1.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="icon-192-v4-1.png">
   <meta name="theme-color" content="#111827">
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="app.js"></script>
+  <link rel="stylesheet" href="styles.css?v=4-1">
+  <script defer src="app.js?v=4-1"></script>
 </head>
 <body>
   <header class="header">
-    <h1>Promo Light <small class="tag">v3.4</small></h1>
-    <button id="btnSettings" class="btn secondary">Configurações GitHub</button>
+    <h1>Promo Light <small class="tag">v4.1</small></h1>
+    <button id="btnSettings" class="btn secondary" hidden>Configurações GitHub</button>
   </header>
 
   <main class="container">
-    <!-- v3.4: imagens empilhadas, cada uma com o MESMO tamanho do vídeo -->
-    <section class="media-stack-v34">
-      <figure class="frame"><img id="img1" src="assets/images/img1.svg" alt="Imagem 1" /></figure>
-      <figure class="frame"><img id="img2" src="assets/images/img2.svg" alt="Imagem 2" /></figure>
-      <figure class="frame"><img id="img3" src="assets/images/img3.svg" alt="Imagem 3" /></figure>
+    <section class="media-stack">
+      <figure class="frame"><img id="img1" src="assets/images/img1.svg?v=4-1" alt="Imagem 1" /></figure>
+      <figure class="frame"><img id="img2" src="assets/images/img2.svg?v=4-1" alt="Imagem 2" /></figure>
+      <figure class="frame"><img id="img3" src="assets/images/img3.svg?v=4-1" alt="Imagem 3" /></figure>
     </section>
 
-    <!-- Vídeo 100% com autoplay quando ~100% visível -->
     <section class="video-wrap">
-      <video id="promoVideo" playsinline muted preload="metadata" poster="assets/images/img3.svg" controls>
-        <source src="assets/video/sample.mp4" type="video/mp4">
+      <video id="promoVideo" playsinline muted preload="metadata" poster="assets/images/img3.svg?v=4-1" controls>
+        <source src="assets/video/sample.mp4?v=4-1" type="video/mp4">
         <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
         Seu navegador não suporta vídeos .mp4.
       </video>
     </section>
 
-    <!-- Frases: uma por linha -->
     <section class="frases">
-      <div class="frase cooper f1">frase 1 P A R A B E N S ! ! !</div>
-      <div class="frase cooper f2">frase 2 voce esta muito perto</div>
-      <div class="frase cooper f3">frase 3 de GANHAR seu</div>
-      <div class="frase cooper f4">frase 4 B R I N D E</div>
-      <div class="frase cooper f5">frase 5 E X C L U S I V O</div>
-      <div class="frase cooper f6">Frase 6 SUBA A ESCADA ROLANTE</div>
+      <div class="frase cooper f1">frase 1 VERMELHO</div>
+      <div class="frase cooper f2">frase 2 MARRON</div>
+      <div class="frase cooper f3">frase 3 PRETO</div>
+      <div class="frase cooper f4">frase 4 CREME</div>
+      <div class="frase cooper f5">frase 5 AMARELO</div>
+      <div class="frase cooper f6">Frase 6 LARANJA</div>
     </section>
 
     <section class="actions">
-      <label class="phone-label">
-        Telefone do usuário (com DDI + DDD) para registro no log:
-        <input id="inputPhone" type="tel" <!--  placeholder="+55 11 99999-9999" --> inputmode="tel" autocomplete="tel" />
+      <label class="phone-label" hidden>
+        Telefone do usuário (com DDI + DDD):
+        <input id="inputPhone" type="tel" placeholder="+55 11 99999-9999" inputmode="tel" autocomplete="tel" />
       </label>
-      <button id="btnSalvar" class="btn primary">ENVIAR</button>
+
+      <div class="send-row">
+        <button id="btnEnviar" class="btn primary">ENVIAR</button>
+        <span class="send-hint">Enviar MINHA PROMOCAO</span>
+      </div>
     </section>
 
     <p class="note">
       WhatsApp: <code id="whatsTarget"></code> • Imagens auto-ext (<code>.svg/.png/.jpg</code>) •
-      Autoplay do vídeo quando ~100% visível (iOS/Android) • PWA + log opcional no GitHub.
+      Autoplay do vídeo quando ~100% visível (iOS/Android) • PWA (v4.1).
     </p>
   </main>
 
-  <dialog id="settingsModal">
+  <dialog id="settingsModal" hidden>
     <form method="dialog" class="settings">
       <h2>Configurações de Log no GitHub</h2>
-      <p>Para registrar o telefone via API, informe seu token e confirme os dados.</p>
+      <p>Recurso desativado nesta versão.</p>
       <label>Usuário/Owner do GitHub <input id="cfgOwner" type="text" value="joaol-adm"></label>
       <label>Repositório <input id="cfgRepo" type="text" value="PromoLight"></label>
       <label>Branch <input id="cfgBranch" type="text" value="main"></label>
       <label>Caminho do arquivo de log <input id="cfgPath" type="text" value="logs/promo-log.csv"></label>
       <label>Token pessoal (PAT) <input id="cfgToken" type="password" placeholder="ghp_..."></label>
-      <menu><button value="cancel" class="btn secondary">Cancelar</button><button id="btnSaveCfg" value="default" class="btn primary">ENVIAR</button></menu>
-      <p class="hint">Seu token fica salvo apenas no seu navegador (localStorage).</p>
+      <menu><button value="cancel" class="btn secondary">Fechar</button></menu>
+      <p class="hint">Desativado na v4.1 (visível novamente em futuras versões).</p>
     </form>
   </dialog>
 
@@ -77,7 +78,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js');
+        navigator.serviceWorker.register('sw.js?v=4-1');
       });
     }
   </script>

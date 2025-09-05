@@ -1,108 +1,55 @@
 @font-face {
   font-family: "Cooper Black";
-  src: url("assets/fonts/CooperBlack.woff2") format("woff2");
+  src: url("assets/fonts/CooperBlack.woff2?v=4-1") format("woff2");
   font-weight: normal; font-style: normal; font-display: swap;
 }
 
 :root{
   --bg:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#9ca3af; --accent:#2563eb;
-  /* Tamanho único para imagens e vídeo (igual ao da v3.3 que ficou bom) */
-  --h-video: clamp(140px, 32vh, 240px);
+  --h-media: clamp(120px, 28vh, 220px);
 }
 
 *{box-sizing:border-box}
 html,body{height:100%}
-body{
-  margin:0; background:var(--bg); color:var(--text);
-  -webkit-text-size-adjust: 100%;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Cooper Black", serif;
-}
+body{ margin:0; background:var(--bg); color:var(--text); -webkit-text-size-adjust: 100%; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Cooper Black", serif; }
+[hidden]{ display:none !important; }
 
-.header,.footer{
-  display:flex; justify-content:space-between; align-items:center;
-  padding:12px 14px; background:var(--card); border-bottom:1px solid #1f2937;
-}
+.header,.footer{ display:flex; justify-content:space-between; align-items:center; padding:12px 14px; background:var(--card); border-bottom:1px solid #1f2937; }
 .footer{ border-top:1px solid #1f2937; border-bottom:none; justify-content:center; }
 h1{margin:0; font-size:clamp(1rem, 3vw, 1.3rem); letter-spacing:0.3px}
 .tag{ background:#1f2937; color:#e5e7eb; padding:1px 6px; border-radius:999px; font-size:0.75rem; margin-left:6px; }
 
 .container{ max-width:760px; margin:14px auto; padding:0 8px; }
 
-/* v3.4: pilha vertical com frames do mesmo tamanho do vídeo */
-.media-stack-v34{ display:flex; flex-direction:column; gap:8px; }
-.frame{
-  background:var(--card); padding:6px; border-radius:10px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.16);
-  overflow:hidden;
-}
-.frame img{
-  width:100%; height:auto; display:block; border-radius:6px;
-  object-fit: contain;
-  max-height: var(--h-video);
-}
+.media-stack{ display:flex; flex-direction:column; gap:8px; }
+.frame{ background:var(--card); padding:6px; border-radius:10px; box-shadow: 0 6px 16px rgba(0,0,0,0.16); overflow:hidden; }
+.frame img{ width:100%; height:auto; display:block; border-radius:6px; object-fit: contain; max-height: var(--h-media); }
 
-/* Vídeo 100% com limite igual ao das imagens */
-.video-wrap{
-  margin-top:8px; background:var(--card); padding:6px; border-radius:10px;
-  box-shadow:0 6px 16px rgba(0,0,0,0.16);
-}
-video{
-  width:100%; height:auto; display:block; border-radius:6px;
-  max-height: var(--h-video);
-}
+.video-wrap{ margin-top:8px; background:var(--card); padding:6px; border-radius:10px; box-shadow:0 6px 16px rgba(0,0,0,0.16); }
+video{ width:100%; height:auto; display:block; border-radius:6px; max-height: var(--h-media); }
 
-/* Frases: uma linha por frase */
 .frases{ display:flex; flex-direction:column; gap:6px; margin-top:10px; }
-.frase{
-  padding:8px 10px; border-radius:8px; background:var(--card);
-  text-align:center; line-height:1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  font-size: clamp(0.9rem, 3.4vw, 1.1rem);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.14);
-}
+.frase{ padding:8px 10px; border-radius:8px; background:var(--card); text-align:center; line-height:1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: clamp(0.9rem, 3.4vw, 1.1rem); box-shadow: 0 6px 14px rgba(0,0,0,0.14); }
 .cooper{ font-family: "Cooper Black", serif; font-weight: normal; }
+.f1{ color:#FF0000; } .f2{ color:#843C0C; } .f3{ color:#542708; } .f4{ color:#FFF2CC; text-shadow:0 0 3px rgba(0,0,0,0.6); } .f5{ color:#FFFF00; text-shadow:0 0 3px rgba(0,0,0,0.6); } .f6{ color:#ED7D31; }
 
-.f1{ color:#FF0000; } .f2{ color:#843C0C; } .f3{ color:#542708; }
-.f4{ color:#FFF2CC; text-shadow:0 0 3px rgba(0,0,0,0.6); }
-.f5{ color:#FFFF00; text-shadow:0 0 3px rgba(0,0,0,0.6); }
-.f6{ color:#ED7D31; }
+.actions{ display:flex; gap:12px; align-items:center; margin-top:12px; flex-wrap:wrap; }
+.send-row{ display:flex; align-items:center; gap:10px; }
+.send-hint{ color:var(--muted); font-size:0.95rem; }
 
-.actions{ display:flex; gap:8px; align-items:center; margin-top:10px; flex-wrap:wrap; }
-.phone-label{ display:flex; gap:6px; align-items:center; font-size:0.9rem; }
-.phone-label input{
-  padding:8px 10px; border-radius:8px; border:1px solid #1f2937;
-  background:#0b1220; color:var(--text); min-width:220px; width:100%;
-}
-
-.btn{
-  appearance:none; border:none; cursor:pointer; padding:8px 12px; border-radius:10px;
-  font-weight:600; box-shadow:0 4px 12px rgba(0,0,0,0.18); font-size:0.95rem;
-}
-.btn.primary{ background:var(--accent); color:white; }
-.btn.secondary{ background:#374151; color:white; }
-
+.btn{ appearance:none; border:none; cursor:pointer; padding:10px 14px; border-radius:10px; font-weight:700; box-shadow:0 4px 12px rgba(0,0,0,0.18); font-size:1rem; }
+.btn.primary{ background:var(--accent); color:white; } .btn.secondary{ background:#374151; color:white; }
 .note{ color:var(--muted); margin-top:8px; font-size:0.85rem; }
 
-/* Modal compacto e rolável (mantido) */
-dialog{
-  width: min(92vw, 420px);
-  max-height: 85vh;
-  overflow: auto;
-  border: none; border-radius: 12px;
-  padding: 0;
-  background: var(--card); color: var(--text);
-}
+dialog{ width: min(92vw, 420px); max-height: 85vh; overflow: auto; border: none; border-radius: 12px; padding: 0; background: var(--card); color: var(--text); }
 dialog::backdrop{ background: rgba(0,0,0,0.55); }
 .settings{ padding: 12px; font-size: 0.95rem; }
 .settings h2{ margin: 0 0 6px 0; font-size: 1.05rem; }
 .settings p{ margin: 0 0 10px 0; color: var(--muted); font-size: 0.9rem; }
 .settings label{ display:block; margin:8px 0 6px; }
-.settings input{
-  width:100%; padding:8px 10px; border-radius:8px; border:1px solid #1f2937;
-  background:#0b1220; color: var(--text);
-}
+.settings input{ width:100%; padding:8px 10px; border-radius:8px; border:1px solid #1f2937; background:#0b1220; color: var(--text); }
 .settings menu{ display:flex; gap:8px; justify-content:flex-end; padding:0; margin-top:10px; }
 
-/* Telas muito estreitas */
 @media (max-width: 360px){
-  :root{ --h-video: clamp(110px, 26vh, 200px); }
+  :root{ --h-media: clamp(110px, 26vh, 200px); }
 }
