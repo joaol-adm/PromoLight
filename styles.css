@@ -29,7 +29,7 @@ h1{margin:0; font-size:clamp(1rem, 3vw, 1.3rem); letter-spacing:0.3px}
 video{ width:100%; height:auto; display:block; border-radius:6px; max-height: var(--h-media); }
 
 .frases{ display:flex; flex-direction:column; gap:6px; margin-top:10px; }
-.frase{ padding:8px 10px; border-radius:8px; background:var(--card); text-align:center; line-height:1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: clamp(0.9rem, 3.4vw, 1.1rem); box-shadow: 0 6px 14px rgba(0,0,0,0.14); }
+.frase{ padding:8px 10px; border-radius:8px; background:var(--card); text-align:center; line-height:1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: clamp(1.1rem, 3.4vw, 1.4rem); box-shadow: 0 6px 14px rgba(0,0,0,0.14); }
 .cooper{ font-family: "Cooper Black", serif; font-weight: normal; }
 .f1{ color:#FF0000; } .f2{ color:#843C0C; } .f3{ color:#542708; } .f4{ color:#FFF2CC; text-shadow:0 0 3px rgba(0,0,0,0.6); } .f5{ color:#FFFF00; text-shadow:0 0 3px rgba(0,0,0,0.6); } .f6{ color:#ED7D31; }
 
