@@ -7,7 +7,7 @@
 :root{
   --bg:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#9ca3af; --accent:#2563eb;
   /* Tamanho único para imagens e vídeo (igual ao da v3.3 que ficou bom) */
-  --h-video: clamp(120px, 28vh, 220px);
+  --h-video: clamp(140px, 32vh, 240px);
 }
 
 *{box-sizing:border-box}
