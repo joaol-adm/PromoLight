@@ -1,6 +1,6 @@
 // PromoLight v4.1 - Cache-busting aplicado; log/telefone ocultos; WhatsApp + notificação
-const WHATSAPP_TARGET = "+5511912341234"; // altere aqui uma vez só
-const WHATSAPP_MSG = "parabens-sms";
+const WHATSAPP_TARGET = "+551535009695"; // altere aqui uma vez só
+const WHATSAPP_MSG = "Salvar MINHA PROMOCAO";
 const ASSET_VER = "v=4-1";
 
 const els = { btnEnviar: null, btnSettings: null, modal: null };
