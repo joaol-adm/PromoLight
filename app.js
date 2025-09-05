@@ -1,6 +1,6 @@
-// PromoLight v3.3 - Imagens menores + Grid fixo + Modal compacto + Autoplay de vídeo visível
-const WHATSAPP_TARGET = "+551535009695";
-const WHATSAPP_MSG = "Salvar MEU BRINDE";
+// PromoLight v3.4 - Imagens com o mesmo tamanho do vídeo + pilha vertical
+const WHATSAPP_TARGET = "+5511912341234"; // altere aqui uma vez só
+const WHATSAPP_MSG = "parabens-sms";
 
 const els = {
   phone: null, btnSalvar: null, btnSettings: null, modal: null,
@@ -53,13 +53,14 @@ async function init(){
   els.btnSaveCfg.addEventListener('click', (ev) => { ev.preventDefault(); saveCfg(); els.modal.close(); });
 
   await resolveImagesAnyExt();
+
   setupVideoAutoplayOnFullView();
 }
 
 async function onSalvar(){
   const userNumber = (els.phone.value || '').replace(/\s+/g, '');
   if(!userNumber){
-    alert('Informe o seu telefone com DDI + DDD para SALVAR SEU BRINDE.');
+    alert('Informe o seu telefone com DDI + DDD para registro no log.');
     els.phone.focus();
     return;
   }
@@ -78,6 +79,7 @@ async function onSalvar(){
   }catch(err){ console.error('Erro ao gravar log no GitHub:', err); }
 }
 
+/* ---------- WhatsApp ---------- */
 async function openWhatsApp(toNumberRaw, text){
   const to = (toNumberRaw || '').replace(/\D/g,'');
   const encoded = encodeURIComponent(text);
@@ -89,6 +91,7 @@ async function openWhatsApp(toNumberRaw, text){
   });
 }
 
+/* ---------- Notificação local ---------- */
 async function showLocalNotification(text){
   if(!('Notification' in window)) return;
   let perm = Notification.permission; if(perm === 'default'){ perm = await Notification.requestPermission(); }
@@ -101,6 +104,7 @@ async function showLocalNotification(text){
   }else{ new Notification(text); }
 }
 
+/* ---------- Log CSV no GitHub ---------- */
 async function appendLogToGitHub(cfg, userNumber){
   const endpoint = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}`;
   const headers = { 'Accept':'application/vnd.github+json', 'Authorization': `token ${cfg.token}` };
@@ -116,6 +120,7 @@ async function appendLogToGitHub(cfg, userNumber){
   if(!res.ok){ const t = await res.text(); throw new Error('GitHub PUT falhou: ' + res.status + ' ' + t); }
 }
 
+/* ---------- Imagens: .svg, .png, .jpg automaticamente ---------- */
 async function firstExisting(paths){
   for(const p of paths){
     try{ const r = await fetch(p, { method:'HEAD', cache:'no-store' }); if(r.ok) return p; }catch(e){}
@@ -135,10 +140,11 @@ async function resolveImagesAnyExt(){
   }
 }
 
+/* ---------- Autoplay do vídeo quando ~100% visível ---------- */
 function setupVideoAutoplayOnFullView(){
   const video = document.getElementById('promoVideo');
   if(!video) return;
-  video.muted = true;
+  video.muted = true; // necessário para autoplay em mobile
   const observer = new IntersectionObserver((entries) => {
     for(const entry of entries){
       if(entry.target !== video) continue;
